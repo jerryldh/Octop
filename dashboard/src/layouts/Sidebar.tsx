@@ -6,7 +6,7 @@ import AvatarDropdown from "../components/AvatarDropdown";
 import AppVersionBadge from "../components/AppVersionBadge";
 import CurrentVersionBadge from "../components/CurrentVersionBadge";
 import { ArrowRightLeft, ChevronDown, X } from "lucide-react";
-import { useTheme } from "../context/ThemeContext";
+
 import { useLayoutMode } from "../context/LayoutModeContext";
 import { useUserRole } from "../hooks/useUserRole";
 import { useCurrentUser, useSetCurrentUser } from "../hooks/useCurrentUser";
@@ -385,7 +385,6 @@ export default function Sidebar({
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-  const { isDark } = useTheme();
   const role = useUserRole();
   const user = useCurrentUser();
   const setUser = useSetCurrentUser();
@@ -428,9 +427,6 @@ export default function Sidebar({
   const showChatRailExpand = !isMinimal && !chatSidebarOpen;
 
   const isRailCollapsed = collapsed && !isMobile;
-  const wordmarkSrc = isDark
-    ? "/logo_horizontal_white.png"
-    : "/logo_horizontal_dark.png";
 
   const selectMinimalPane = useCallback(
     (pane: MinimalNavPane, opts?: { expand?: boolean }) => {
@@ -491,19 +487,51 @@ export default function Sidebar({
 
   const brandInner = (
     <>
-      <img
-        src={isRailCollapsed ? "/pwa-192.png" : wordmarkSrc}
-        alt="Octop"
+      <div
+        aria-label="Atour DataAgent"
         style={{
-          height: isRailCollapsed ? 32 : isMobile ? 38 : 36,
-          width: isRailCollapsed ? 32 : "auto",
-          maxWidth: isRailCollapsed ? 32 : isMobile ? 190 : 160,
-          objectFit: "contain",
-          display: "block",
+          display: "flex",
+          alignItems: "center",
+          gap: isRailCollapsed ? 0 : 8,
+          minWidth: 0,
           flexShrink: 0,
-          borderRadius: isRailCollapsed ? 8 : undefined,
         }}
-      />
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 32,
+            height: 32,
+            flexShrink: 0,
+            borderRadius: 8,
+            background: "var(--fn-accent)",
+            color: "#ffffff",
+            fontSize: 16,
+            fontWeight: 600,
+            lineHeight: 1,
+          }}
+        >
+          A
+        </span>
+        {!isRailCollapsed && (
+          <span
+            style={{
+              fontSize: isMobile ? 16 : 15,
+              fontWeight: 600,
+              letterSpacing: "0.01em",
+              color: "var(--fn-text-primary)",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            Atour DataAgent
+          </span>
+        )}
+      </div>
       {!isRailCollapsed && !isMobile && (
         <>
           <CurrentVersionBadge isMobile={isMobile} />

@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Octop",
-  "short_name": "Octop",
+  "name": "Atour DataAgent",
+  "short_name": "Atour DataAgent",
   "description": "Smarter self-hosted AI assistant — multi-user, multi-agent",
   "start_url": "/",
   "scope": "/",
@@ -37,5 +37,8 @@
       "purpose": "any"
     }
   ],
-  "categories": ["productivity", "utilities"]
+  "categories": [
+    "productivity",
+    "utilities"
+  ]
 }

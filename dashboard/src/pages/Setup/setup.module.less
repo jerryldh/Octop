@@ -60,13 +60,34 @@
   min-width: 0;
 }
 
-.wizardHeaderLogo {
-  height: 32px;
-  width: auto;
-  max-width: 180px;
+.wizardHeaderBrandMark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
-  object-fit: contain;
-  display: block;
+}
+
+.wizardHeaderBrandBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--fn-accent);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.wizardHeaderBrandName {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--fn-text-primary);
+  white-space: nowrap;
 }
 
 .wizardHeaderTitle {

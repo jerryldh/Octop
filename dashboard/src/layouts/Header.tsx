@@ -3,7 +3,6 @@ import { Menu as MenuIcon } from "lucide-react";
 import PwaInstallPrompt from "../components/PwaInstallPrompt";
 import AppVersionBadge from "../components/AppVersionBadge";
 import CurrentVersionBadge from "../components/CurrentVersionBadge";
-import { useTheme } from "../context/ThemeContext";
 import { typeSize } from "../utils/mobileTypeScale";
 
 const { Header: AntHeader } = Layout;
@@ -20,11 +19,6 @@ interface HeaderProps {
  * Desktop GitHub / theme controls moved into the account popover.
  */
 export default function Header({ onToggle, isMobile }: HeaderProps) {
-  const { isDark } = useTheme();
-  const mobileLogoSrc = isDark
-    ? "/logo_horizontal_white.png"
-    : "/logo_horizontal_dark.png";
-
   if (!isMobile) return null;
 
   // iOS PWA (`apple-mobile-web-app-status-bar-style: black-translucent`) draws
@@ -77,18 +71,49 @@ export default function Header({ onToggle, isMobile }: HeaderProps) {
             <MenuIcon size={20} strokeWidth={1.8} />
           </button>
         )}
-        <img
-          src={mobileLogoSrc}
-          alt="octop"
+        <div
+          aria-label="Atour DataAgent"
           style={{
-            height: 36,
-            width: "auto",
-            maxWidth: 160,
-            objectFit: "contain",
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            minWidth: 0,
             flexShrink: 0,
-            display: "block",
           }}
-        />
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 32,
+              height: 32,
+              flexShrink: 0,
+              borderRadius: 8,
+              background: "var(--fn-accent)",
+              color: "#ffffff",
+              fontSize: 16,
+              fontWeight: 600,
+              lineHeight: 1,
+            }}
+          >
+            A
+          </span>
+          <span
+            style={{
+              fontSize: 16,
+              fontWeight: 600,
+              letterSpacing: "0.01em",
+              color: "var(--fn-text-primary)",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            Atour DataAgent
+          </span>
+        </div>
         <div
           style={{
             display: "flex",

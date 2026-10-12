@@ -18,7 +18,6 @@ import {
 import { apiErrorMessage } from "../../utils/apiError";
 import { refreshServerLabels } from "../../i18n";
 import { applyUserLocale, applyGuestLocale } from "../../utils/locale";
-import { useTheme } from "../../context/ThemeContext";
 import {
   isSsoPopup,
   isSsoPopupMessage,
@@ -74,7 +73,6 @@ function providerIcon(provider: OauthProviderStatus): ReactNode {
 
 export default function LoginPage() {
   const { t } = useTranslation();
-  const { isDark } = useTheme();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [username, setUsername] = useState("");
@@ -269,19 +267,45 @@ export default function LoginPage() {
           margin: "0 16px",
         }}
       >
-        <img
-          src={
-            isDark ? "/logo_horizontal_white.png" : "/logo_horizontal_dark.png"
-          }
-          alt="Octop"
+        <div
+          aria-label="Atour DataAgent"
           style={{
-            height: 48,
-            width: "auto",
-            maxWidth: 260,
-            objectFit: "contain",
-            display: "block",
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            minWidth: 0,
           }}
-        />
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 44,
+              height: 44,
+              flexShrink: 0,
+              borderRadius: 12,
+              background: "var(--fn-accent)",
+              color: "#ffffff",
+              fontSize: 22,
+              fontWeight: 600,
+              lineHeight: 1,
+            }}
+          >
+            A
+          </span>
+          <span
+            style={{
+              fontSize: 22,
+              fontWeight: 600,
+              letterSpacing: "0.01em",
+              color: "var(--fn-text-primary)",
+            }}
+          >
+            Atour DataAgent
+          </span>
+        </div>
 
         <h2
           style={{
