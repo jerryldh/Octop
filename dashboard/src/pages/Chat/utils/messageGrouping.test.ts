@@ -377,6 +377,42 @@ describe("groupConsecutiveAssistantMessages", () => {
     expect(split.answerMessage?.content).toBe("here is the summary");
   });
 
+  it("keeps the main answer when an ordinary tool sits between text bubbles", () => {
+    // Regression: an edit_file round must not collapse the answer to only the
+    // trailing note — the pre-tool answer is part of the same reply.
+    const split = splitAssistantTurn([
+      msg("assistant", "a1", {
+        content: "渠道有两套口径：CRS 渠道与订单来源。",
+      }),
+      msg("assistant", "tool", {
+        toolData: {
+          name: "edit_file",
+          arguments: "{}",
+          output: "Successfully replaced 1 instance(s)",
+        },
+      }),
+      msg("assistant", "a2", { content: "口径已沉淀到长期记忆。" }),
+    ]);
+    expect(split.answerMessage?.content).toBe(
+      "渠道有两套口径：CRS 渠道与订单来源。 口径已沉淀到长期记忆。",
+    );
+  });
+
+  it("keeps the main answer across several ordinary tool rounds", () => {
+    const split = splitAssistantTurn([
+      msg("assistant", "a1", { content: "先看分区" }),
+      msg("assistant", "t1", {
+        toolData: { name: "run_shell", arguments: "{}", output: "ok" },
+      }),
+      msg("assistant", "a2", { content: "再取昨天" }),
+      msg("assistant", "t2", {
+        toolData: { name: "read_file", arguments: "{}", output: "ok" },
+      }),
+      msg("assistant", "a3", { content: "结论如上" }),
+    ]);
+    expect(split.answerMessage?.content).toBe("先看分区 再取昨天 结论如上");
+  });
+
   it("does not join an identical host dispatch twice", () => {
     const split = splitAssistantTurn([
       msg("assistant", "h1", {
